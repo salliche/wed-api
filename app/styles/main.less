@@ -9,11 +9,26 @@ body {
 	padding: 10px;
 	background-color: #CEE3F6;
 
-	& > .label {
+	.title {
+		cursor: pointer;
+	}
+
+	.label {
+		display: inline-block;
 		font-weight: bold;
 		font-size: 18px; 
 		line-height: 20px;
 		cursor: pointer;
+	}
+
+	.arrow-icon {
+	    display: inline-block;
+	    margin-left: 10px;
+		width: 11px;
+	    height: 20px;
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAHCAMAAADpsEdvAAAAIVBMVEU9Qkc9Qkc9Qkc9Qkc9Qkc9Qkc9Qkc9Qkc9Qkc9Qkc9QkcsEf0hAAAACnRSTlMAETNmiJm7zN3uJChiXQAAADBJREFUeNotyEECACAIAkEys+L/D04xTrPAjqM2r8HJVSQDY2cU81dEU9HsEH+4+AA4ZgEw+oEgRQAAAABJRU5ErkJggg==);
+		background-repeat: no-repeat;
+		background-position: center bottom;
 	}
 
 	.review {
@@ -23,6 +38,10 @@ body {
 
 .hidden {
 	display: none;
+}
+
+.weekends {
+	text-align: center;
 }
 
 .weekend {

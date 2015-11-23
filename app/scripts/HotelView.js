@@ -1,5 +1,6 @@
 'use strict';
 
+var hotelTemplate = require('../templates/hotel.hbs');
 var WeekendView = require('./WeekendView');
 
 
@@ -10,27 +11,20 @@ var NoWeekendView = Marionette.ItemView.extend({
 
 module.exports = Marionette.CompositeView.extend({
 	className: 'hotel',
-	template: Handlebars.compile(
-		'<div class="label">{{label}}</div>' +
-		'<div class="infos">' +
-		'	<span class="position"></span>' +
-		'	<span class="review"></span>' +
-		'</div>' +
-		'<div class="weekends hidden"></div>'),
-
+	template: hotelTemplate,
 
 	childViewContainer: '.weekends',
     childView: WeekendView,
     emptyView: NoWeekendView,
 
 	ui: {
-		$label: '.label',
+		$title: '.title',
 		$position: '.position',
 		$review: '.review'
 	},
 
 	events: {
-		'click @ui.$label': 'onLabelClick'
+		'click @ui.$title': 'onLabelClick'
 	},
 
 	initialize: function () {
@@ -43,7 +37,7 @@ module.exports = Marionette.CompositeView.extend({
 	},
 
 	onLabelClick: function (event) {
-		var $target = $(event.currentTarget).siblings('.weekends');
+		var $target = $(event.currentTarget).closest('.hotels').find('.weekends');
 		$target.toggleClass('hidden');
 	}
 });

@@ -1,13 +1,10 @@
 'use strict';
 
+var weekendTemplate = require('../templates/weekend.hbs');
+
 module.exports = Marionette.ItemView.extend({
 	className: 'weekend',
-	template: Handlebars.compile(
-		'<div class="label">{{label}}</div>' +
-		'<img class="image" src="{{imageUrl}}" />' +
-		'<div class="themes">' +
-		'	<span>Themes: </span>' +
-		'</div>'),
+	template: weekendTemplate,
 
 	onRender: function () {
 		var themes = this.model.get('topTheme');

@@ -9,8 +9,6 @@ module.exports = Marionette.Application.extend({
     history: Backbone.history,
 
     onStart: function () {
-        console.log('start App');
-
         this.getSearch()
             .fail(function () {
                 console.error('error when loading hotels');
@@ -24,21 +22,15 @@ module.exports = Marionette.Application.extend({
     },
 
     getSearch: function () {
-        var deferred = Q.defer();
-
         this.searchModel = new SearchModel();
-        this.searchModel.fetch({
-            success: _.bind(function (data) {
-                this.hotels = data.get('exactMatch');
-                deferred.resolve();
+        return this.searchModel.fetch()
+            .then(_.bind(function (data) {
+                this.hotels = data.exactMatch;
             }, this),
-            error: _.bind(function () {
-                console.error('erreur while fetching hotels');
-                deferred.reject();
-            }, this)
-        });
-        
-        return deferred.promise;
+            function (xhr, textStatus, err) {
+                console.error('error while fetching hotels');
+                throw err;
+            })
     },
 
     init: function () {

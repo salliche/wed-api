@@ -1,5 +1,7 @@
 'use strict';
 
+
+var hotelsTemplate = require('../templates/hotels.hbs');
 var HotelView = require('./HotelView')
 
 
@@ -10,7 +12,7 @@ var NoHotelView = Marionette.ItemView.extend({
 
 module.exports = Marionette.CompositeView.extend({
 	className: 'hotels-container',
-	template: Handlebars.compile('<div class="hotels"></div>'),
+	template: hotelsTemplate,
 
 	childViewContainer: '.hotels',
     childView: HotelView,
