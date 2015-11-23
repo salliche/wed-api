@@ -1,4 +1,4 @@
-# simple-api
+# wed-api
 
 * launch a terminal and execute: 
 ```bash
