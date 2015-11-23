@@ -18,9 +18,9 @@ module.exports = Marionette.CompositeView.extend({
     emptyView: NoWeekendView,
 
 	ui: {
-		$title: '.title',
-		$position: '.position',
-		$review: '.review'
+		$title: '.hotel__title',
+		$position: '.hotel__position',
+		$review: '.hotel__review'
 	},
 
 	events: {
@@ -37,7 +37,7 @@ module.exports = Marionette.CompositeView.extend({
 	},
 
 	onLabelClick: function (event) {
-		var $target = $(event.currentTarget).closest('.hotels').find('.weekends');
+		var $target = $(event.currentTarget).siblings('.weekends');
 		$target.toggleClass('hidden');
 	}
 });

@@ -10,7 +10,7 @@ module.exports = Marionette.ItemView.extend({
 		var themes = this.model.get('topTheme');
 		for (var i = 0; i < themes.length; i++) {
 			var $span = $(document.createElement('span'))
-				.addClass('theme')
+				.addClass('weekend__theme')
 				.html(themes[i]);
 			this.$el.find('.themes').append($span);
 		}
