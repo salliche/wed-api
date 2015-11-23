@@ -1,37 +1,23 @@
+var path = require('path');
 var gulp = require('gulp');
 var browserify = require('gulp-browserify');
 var rename = require('gulp-rename');
 var less = require('gulp-less');
-var livereload = require('gulp-livereload');
-var useref = require('gulp-useref');
-var gulpif = require('gulp-if');
 var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
 var clean = require('gulp-clean');
-var handlebars = require('gulp-handlebars');
-var defineModule = require('gulp-define-module');
-var expressService = require('gulp-express-service');
 var browserifyHandlebars = require('browserify-handlebars');
-var path = require('path');
+var browserSync = require('browser-sync').create();
 
 var server = require('./server');
-
-
-gulp.task('templates', function() {
-  gulp.src(['templates/**/*.hbs'])
-    .pipe(handlebars())
-    .pipe(defineModule('node'))
-    .pipe(gulp.dest('build/templates'));
-});
 
 gulp.task('less', function () {
   return gulp.src('app/styles/**/*.less', { base: 'app/styles/' })
     .pipe(less({
-      paths: [ path.join(__dirname, 'less', 'includes') ]
+      	paths: [ path.join(__dirname, 'less', 'includes') ]
     }))
     .pipe(minifyCss())
-    .pipe(gulp.dest('app/dist/css'))
-    .pipe(livereload());
+    .pipe(gulp.dest('dist/css'));
 });
 
 gulp.task('browserify', function () {
@@ -41,23 +27,30 @@ gulp.task('browserify', function () {
 			transform: [browserifyHandlebars],
       		debug: true
 		}))
+		.pipe(uglify())
 		.pipe(rename('bundle.js'))
-		.pipe(gulp.dest('app/dist/js'))
-		.pipe(livereload());
+		.pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('clean', function () {
-	return gulp.src('app/dist', { read: false })
-		.pipe(clean());
-});
-
-gulp.task('default', ['templates', 'less', 'browserify'], function () {
+gulp.task('server', [ 'less', 'browserify', 'watch'], function () {
 	server();
 });
 
+gulp.task('browser-sync', ['server'], function() {
+    browserSync.init({
+        proxy: "localhost:5000",
+        port: 5001
+    });
+});
+
+gulp.task('clean', function () {
+	return gulp.src('dist', { read: false })
+		.pipe(clean());
+});
+
+gulp.task('default', ['browser-sync']);
+
 gulp.task('watch', function () {
-	livereload.listen();
-	gulp.watch('app/templates/**/*.hbs', ['templates']);
 	gulp.watch('app/styles/**/*.less', ['less']);
 	gulp.watch('app/scripts/**/*.js', ['browserify']);
 });

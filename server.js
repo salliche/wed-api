@@ -1,11 +1,10 @@
 var jade = require('jade');
 var express = require('express');
 
-
 module.exports = function () {
 	var app = express();
 
-	app.use(express.static(__dirname + '/app'));
+	app.use(express.static(__dirname + '/dist'));
 
 	app.get('/', function (req, res) {
 	    res.redirect('/index.html');
