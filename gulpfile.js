@@ -5,7 +5,7 @@ var rename = require('gulp-rename');
 var less = require('gulp-less');
 var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
-var clean = require('gulp-clean');
+var del = require('del');
 var browserifyHandlebars = require('browserify-handlebars');
 var browserSync = require('browser-sync').create();
 
@@ -32,7 +32,14 @@ gulp.task('browserify', function () {
 		.pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('server', [ 'less', 'browserify', 'watch'], function () {
+gulp.task('clean', function (callback) {
+	return del(['dist']).then(callback, function (err) {
+		console.log(err);
+		callback();
+	});
+});
+
+gulp.task('server', ['less', 'browserify', 'watch'], function () {
 	server();
 });
 
@@ -41,11 +48,6 @@ gulp.task('browser-sync', ['server'], function() {
         proxy: "localhost:5000",
         port: 5001
     });
-});
-
-gulp.task('clean', function () {
-	return gulp.src('dist', { read: false })
-		.pipe(clean());
 });
 
 gulp.task('default', ['browser-sync']);
