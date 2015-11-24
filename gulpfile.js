@@ -17,7 +17,8 @@ gulp.task('less', function () {
       	paths: [ path.join(__dirname, 'less', 'includes') ]
     }))
     .pipe(minifyCss())
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest('dist/css'))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('browserify', function () {
@@ -54,5 +55,5 @@ gulp.task('default', ['browser-sync']);
 
 gulp.task('watch', function () {
 	gulp.watch('app/styles/**/*.less', ['less']);
-	gulp.watch('app/scripts/**/*.js', ['browserify']);
+	gulp.watch('app/scripts/**/*.js', ['browserify']).on('change', browserSync.reload);
 });
